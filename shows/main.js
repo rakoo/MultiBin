@@ -3,18 +3,24 @@ function (doc, req) {
 
     var mustache = require("vendor/couchapp/lib/mustache");
 
-    var path;
-    if (typeof(req.path[5]) === 'undefined') {
-        path = "../"
+    var path, cipherdata, errormessage;
+
+    if (req.raw_path.substr(-4) == 'main') {
+        path = "../";
     } else {
-        path = "../../"
+        path = "../../";
+    }
+
+    if (doc) {
+        cipherdata = doc.content;
+    } else {
+        cipherdata = null;
     }
 
     data = {
         attachment_path: path,
         version: 1.0,
-        errormessage: "hey",
-        cipherdata: typeof(req.path[5])
+        cipherdata: cipherdata
     }
     return mustache.to_html(this.templates.page, data);
 }
