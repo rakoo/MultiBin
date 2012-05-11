@@ -10,9 +10,9 @@ function (doc, req) {
     } else {
         path = "../../";
         if (doc) {
-            cipherdata = doc.content;
+            cipherdata = doc.data;
         } else if (req.raw_path.substr(-1) != '/' ) {
-            cipherdata = "non-empty";
+            errormessage = "Wrong path : " + req.raw_path
         }
     }
 
@@ -20,6 +20,7 @@ function (doc, req) {
     data = {
         attachment_path: path,
         version: 1.0,
+        errormessage: errormessage,
         cipherdata: cipherdata
     }
     return mustache.to_html(this.templates.page, data);
