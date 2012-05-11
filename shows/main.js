@@ -9,13 +9,13 @@ function (doc, req) {
         path = "../";
     } else {
         path = "../../";
+        if (doc) {
+            cipherdata = doc.content;
+        } else if (req.raw_path.substr(-1) != '/' ) {
+            cipherdata = "non-empty";
+        }
     }
 
-    if (doc) {
-        cipherdata = doc.content;
-    } else {
-        cipherdata = null;
-    }
 
     data = {
         attachment_path: path,
