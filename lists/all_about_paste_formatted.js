@@ -11,6 +11,11 @@ function(head, req) {
           tmp_doc.meta.commentid = row.id;
       }
 
+      if (row.doc.meta.expire == 'burn') {
+          tmp_doc.meta.burnafterreading = true;
+          delete tmp_doc.meta.expire;
+      }
+
     ret.push(tmp_doc);
   }
   send(JSON.stringify(ret));
