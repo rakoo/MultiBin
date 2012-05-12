@@ -5,10 +5,11 @@ This is a new version of
 
 ## Installation
 
-  git clone git://github.com/rakoo/Multibin.git
-  cd MultiBin
-  
-  couchapp push . http://localhost:5984/multibin
+  1. git clone git://github.com/rakoo/Multibin.git
+  2. cd MultiBin
+  3. couchapp push . http://localhost:5984/multibin
+
+CouchApps are a breeze to use, aren't them ?
 
 ## Why CouchDB ?
 
@@ -18,29 +19,29 @@ more valid reason:
 - One software. Instead of needing a webserver with PHP, you now only
   need CouchDB. It also has the benefit of storing everything in a
   database instead of plain files (note: plain files are not especially
-      that bad)
+      that bad).
 - Replication ! You want to replicate someone else's multibin ?
   
   curl -X POST http://localhost:5984/_replicator --data-binary {"_id":"from_source", "source":"http://source.com/multibin", "target":"multibin", "create_target":"true"}
 
   And you're done. You can even use continuous replication, to provide a
   live backup of the source multibin... This is the true power of
-  CouchDB
+  CouchDB.
 
 ## No drawbacks ?
 
 Yes, there is one : most (if not all) online hosting
 services provide a Webserver with PHP. Only a few provide CouchDB. If
 you want to use it, chances are you'll do it from home. But this is what
-Internet is, after all =]
+Internet is, after all. =]
 
 ## Unlicense
 
-This is public domain. See http://unlicense.org/ for more info
+This is public domain. See http://unlicense.org/ for more info.
 
 ## Original License
 
-I stole a lot from ZeroBin. Here is the original License : 
+I stole a lot from ZeroBin. Most of the files I used are modified, so here is the original License : 
 
 ------------------------------------------------------------------------------
 
