@@ -104,6 +104,28 @@ function setElementText(element, text) {
 }
 
 /**
+ * Open the comment entry when clicking the "Reply" button of a comment.
+ * @param object source : element which emitted the event.
+ * @param string commentid = identifier of the comment we want to reply to.
+ */
+function open_reply(source, commentid) {
+    $('div.reply').remove(); // Remove any other reply area.
+    source.after('<div class="reply">'
+                + '<input type="text" id="nickname" title="Optional nickname..." value="Optional nickname..." />'
+                + '<textarea id="replymessage" class="replymessage" cols="80" rows="7"></textarea>'
+                + '<br><button id="replybutton" onclick="send_comment(\'' + commentid + '\');return false;">Post comment</button>'
+                + '<div id="replystatus">&nbsp;</div>'
+                + '</div>');
+    $('input#nickname').focus(function() {
+        $(this).css('color', '#000');
+        if ($(this).val() == $(this).attr('title')) {
+            $(this).val('');
+        }
+    });
+    $('textarea#replymessage').focus();
+}
+
+/**
  * Show decrypted text in the display area, including discussion (if open)
  *
  * @param string key : decryption key
@@ -189,26 +211,30 @@ function send_comment(parentid) {
     if (nick != '' && nick != 'Optional nickname...') {
         ciphernickname = zeroCipher(pageKey(), nick);
     }
-    var data_to_send = { data:cipherdata,
-                         parentid: parentid,
-                         pasteid:  pasteID(),
-                         nickname: ciphernickname
+    var data_to_send = { data:      cipherdata,
+                         meta:      {
+                             parentid: parentid,
+                             pasteid:  pasteID(),
+                             nickname: ciphernickname
+                         },
+                         type:      'comment'
                        };
-
-    $.post(storeLocation(), data_to_send, 'json')
-        .error(function() {
-            showError('Comment could not be sent (serveur error or not responding).');
+    $.ajax({
+        url: storeLocation(),
+        type: 'POST',
+        data: JSON.stringify(data_to_send),
+        contentType: 'application/json',
+        dataType:   'json'
+    }).error(function() {
+            showError('Comment could not be sent (server error or not responding).');
         })
         .success(function(data) {
-            if (data.status == 0) {
+            if (data=['ok'] == 'true') {
                 showStatus('Comment posted.');
                 location.reload();
             }
-            else if (data.status==1) {
-                showError('Could not post comment: '+data.message);
-            }
             else {
-                showError('Could not post comment.');
+                showError('Could not post comment: ' + JSON.stringify(data));
             }
         });
     }
