@@ -1,0 +1,4 @@
+# TODO
+
+- Security : currently, anyone can read/write on the database. Security
+  should be as simple as a ```validate_doc_update```
