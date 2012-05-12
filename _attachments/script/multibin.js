@@ -227,7 +227,8 @@ function send_data() {
     var cipherdata = zeroCipher(randomkey, $('textarea#message').val());
     var data_to_send = { data:           cipherdata,
                          expire:         $('select#pasteExpiration').val(),
-                         opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0
+                         opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0,
+                         type:           "paste"
                        };
     $.ajax({
         url: storeLocation(),
