@@ -245,25 +245,26 @@ function send_data() {
                          expire:         $('select#pasteExpiration').val(),
                          opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0
                        };
-    $.post(scriptLocation(), data_to_send, 'json')
-        .error(function() {
-            showError('Data could not be sent (server error or not responding).');
-        })
-        .success(function(data) {
-            if (data.status == 0) {
+    $.ajax({
+        url: storeLocation(),
+        type: 'POST',
+        data: JSON.stringify(data_to_send),
+        contentType: 'application/json',
+        dataType: 'json'
+    }).success(function(data) {
+            console.log("success : ", data);
+            if (data.ok == true) {
                 stateExistingPaste();
-                var url = scriptLocation() + "?" + data.id + '#' + randomkey;
+                // TODO : switch back to param : main/id should be main?id
+                var url = scriptLocation() + "/" + data.id + '#' + randomkey;
                 showStatus('');
                 $('div#pastelink').html('Your paste is <a href="' + url + '">' + url + '</a>').show();
                 setElementText($('div#cleartext'), $('textarea#message').val());
                 urls2links($('div#cleartext'));
                 showStatus('');
             }
-            else if (data.status==1) {
-                showError('Could not create paste: '+data.message);
-            }
             else {
-                showError('Could not create paste.');
+                showError('Could not create paste:' + JSON.stringify(data));
             }
         });
 }
