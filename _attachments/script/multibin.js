@@ -438,10 +438,6 @@ $(function() {
 
         displayMessages(pageKey(), messages);
     }
-    // Display error message from php code.
-    else if ($('div#errormessage').text().length>1) {
-        showError($('div#errormessage').text());
-    }
     // Create a new paste.
     else {
         newPaste();
