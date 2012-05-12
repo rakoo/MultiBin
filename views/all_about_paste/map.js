@@ -3,6 +3,6 @@ function (doc) {
 		emit(doc._id, null);
     }
 	else if (doc.type == 'comment') {
-		emit(doc.paste_ref,null);
+		emit(doc.meta.pasteid,null);
   }
 }
