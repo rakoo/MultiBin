@@ -229,7 +229,7 @@ function send_comment(parentid) {
             showError('Comment could not be sent (server error or not responding).');
         })
         .success(function(data) {
-            if (data=['ok'] == 'true') {
+            if (data['ok'] == true) {
                 showStatus('Comment posted.');
                 location.reload();
             }
