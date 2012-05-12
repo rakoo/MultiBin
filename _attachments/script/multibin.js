@@ -61,12 +61,8 @@ function zeroDecipher(key, data) {
  *   eg. http://server.com/zero/?aaaa#bbbb --> http://server.com/zero/
  */
 function scriptLocation() {
-    var apploc = appLocation();
-    console.log(apploc);
-    console.log(window.location.pathname.split("/"));
-    return apploc;
-    /*return window.location.href.substring(0,window.location.href.length*/
-    /*-window.location.search.length -window.location.hash.length);*/
+    return window.location.href.substring(0,window.location.href.length
+                                          -window.location.search.length -window.location.hash.length);
 }
 
 /**
@@ -78,18 +74,6 @@ function storeLocation() {
     var loc = window.location.protocol + '//' + window.location.host;
     var database = window.location.pathname.substr(1, window.location.pathname.indexOf("/", 1));
     return loc + "/" + database;
-}
-
-/**
- * @return the application location. Should be what scriptLocation()
- * gives us
- */
-function appLocation() {
-    var loc = window.location.protocol 
-        + "//"
-        + window.location.pathname.split('/').splice(5, window.location.path.length - 5).join('/');
-    console.log("awesome : " + loc);
-    return loc;
 }
 
 /**
@@ -255,8 +239,7 @@ function send_data() {
             console.log("success : ", data);
             if (data.ok == true) {
                 stateExistingPaste();
-                // TODO : switch back to param : main/id should be main?id
-                var url = scriptLocation() + "/" + data.id + '#' + randomkey;
+                var url = scriptLocation() + "?" + data.id + '#' + randomkey;
                 showStatus('');
                 $('div#pastelink').html('Your paste is <a href="' + url + '">' + url + '</a>').show();
                 setElementText($('div#cleartext'), $('textarea#message').val());
@@ -420,10 +403,8 @@ $(function() {
         }
     });
 
-
     // Display an existing paste
-    if ($('div#cipherdata').text().length > 1) {
-        console.log($('div#cipherdata').text());
+    if (window.location.search != "") {
         // Missing decryption key in URL ?
         if (window.location.hash.length == 0) {
             showError('Cannot decrypt paste: Decryption key missing in URL (Did you use a redirector or an URL shortener which strips part of the URL ?)');
