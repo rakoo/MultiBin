@@ -414,13 +414,20 @@ $(function() {
             return;
         }
 
-        // List of messages to display
-        var messages = jQuery.parseJSON($('div#cipherdata').text());
 
-        // Show proper elements on screen.
-        stateExistingPaste();
+        // For couchdb
+        // Get the messages (paste + comments) with couchdb list, and
+        // display them
+        var list_name = scriptLocation().replace(/index.html\/?/, '_list/all_about_paste_formatted/all_about_paste?key\=\"' + pasteID() + '\"\&include_docs\=true')
+        $.get(list_name).success(function(resp){
+            // Show proper elements on screen.
+            stateExistingPaste();
 
-        displayMessages(pageKey(), messages);
+            // Display paste and comments
+            displayMessages(pageKey(), resp);
+        })
+
+
     }
     // Create a new paste.
     else {
