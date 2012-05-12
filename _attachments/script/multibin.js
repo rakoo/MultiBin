@@ -61,8 +61,35 @@ function zeroDecipher(key, data) {
  *   eg. http://server.com/zero/?aaaa#bbbb --> http://server.com/zero/
  */
 function scriptLocation() {
-    return window.location.href.substring(0,window.location.href.length
-               -window.location.search.length -window.location.hash.length);
+    var apploc = appLocation();
+    console.log(apploc);
+    console.log(window.location.pathname.split("/"));
+    return apploc;
+    /*return window.location.href.substring(0,window.location.href.length*/
+    /*-window.location.search.length -window.location.hash.length);*/
+}
+
+/**
+ * @return the store location if it is different from the scriptLocation
+ * (CouchDB)
+ */
+function storeLocation() {
+    // This is specific to couchdb
+    var loc = window.location.protocol + '//' + window.location.host;
+    var database = window.location.pathname.substr(1, window.location.pathname.indexOf("/", 1));
+    return loc + "/" + database;
+}
+
+/**
+ * @return the application location. Should be what scriptLocation()
+ * gives us
+ */
+function appLocation() {
+    var loc = window.location.protocol 
+        + "//"
+        + window.location.pathname.split('/').splice(5, window.location.path.length - 5).join('/');
+    console.log("awesome : " + loc);
+    return loc;
 }
 
 /**
@@ -184,7 +211,7 @@ function send_comment(parentid) {
                          nickname: ciphernickname
                        };
 
-    $.post(scriptLocation(), data_to_send, 'json')
+    $.post(storeLocation(), data_to_send, 'json')
         .error(function() {
             showError('Comment could not be sent (serveur error or not responding).');
         })
