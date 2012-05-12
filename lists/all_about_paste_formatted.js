@@ -7,7 +7,9 @@ function(head, req) {
       delete tmp_doc['_rev'];
       delete tmp_doc['type'];
 
-      tmp_doc.meta.commentid = row.id;
+      if (row.doc.type == 'comment') {
+          tmp_doc.meta.commentid = row.id;
+      }
 
     ret.push(tmp_doc);
   }
