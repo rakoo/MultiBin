@@ -5,9 +5,11 @@ This is a new version of
 
 ## Installation
 
+  ```
   1. git clone git://github.com/rakoo/Multibin.git
   2. cd MultiBin
   3. couchapp push . http://localhost:5984/multibin
+  ```
 
 CouchApps are a breeze to use, aren't them ?
 
@@ -22,11 +24,16 @@ more valid reason:
       that bad).
 - Replication ! You want to replicate someone else's multibin ?
   
+  ```
   curl -X POST http://localhost:5984/_replicator --data-binary {"_id":"from_source", "source":"http://source.com/multibin", "target":"multibin", "create_target":"true"}
+  ```
 
   And you're done. You can even use continuous replication, to provide a
   live backup of the source multibin... This is the true power of
   CouchDB.
+
+  Note that this will also replicate the application, so you won't have
+  to install it manually.
 
 ## No drawbacks ?
 
