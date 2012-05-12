@@ -256,17 +256,21 @@ function send_data() {
     var cipherdata = zeroCipher(randomkey, $('textarea#message').val());
     var expire_duration = $('select#pasteExpiration').val();
     var now = new Date();
-    var real_expire_date = new Date(now)
+    var real_expire_date = new Date(now);
     if (expire_duration == '10min') real_expire_date.setMinutes(now.getMinutes() + 10);
     else if (expire_duration == '1hour') real_expire_date.setHours(now.getHours() + 1);
     else if (expire_duration == '1day') real_expire_date.setDate(now.getDate() + 1);
     else if (expire_duration == '1month') real_expire_date.setMonth(now.getMonth() + 1);
     else if (expire_duration == '1year') real_expire_date.setFullYear(now.getFullYear() + 1);
-    else if (expire_duration == 'never') real_expire_date == null;
+    else if (expire_duration == 'never' || expire_duration == 'burn') real_expire_date == null;
+
+    var burn;
+    if (expire_duration == 'burn') burn = true;
     var data_to_send = { data:           cipherdata,
                          meta:           {
                              opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0,
-                             expire_date: real_expire_date
+                             expire_date: real_expire_date,
+                             burnafterreading: burn
                          },
                          type:           "paste"
                        };
