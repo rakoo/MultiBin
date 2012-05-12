@@ -25,7 +25,7 @@ more valid reason:
 - Replication ! You want to replicate someone else's multibin ?
   
   ```
-  curl -X POST http://localhost:5984/_replicator --data-binary {"_id":"from_source", "source":"http://source.com/multibin", "target":"multibin", "create_target":"true"}
+  curl -X POST http://localhost:5984/_replicator -d '{"_id":"from_source", "source":"http://source.com/multibin", "target":"multibin", "create_target":"true"}'
   ```
 
   And you're done. You can even use continuous replication, to provide a
