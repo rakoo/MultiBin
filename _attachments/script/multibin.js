@@ -215,6 +215,7 @@ function send_comment(parentid) {
                          meta:      {
                              parentid: parentid,
                              pasteid:  pasteID(),
+                             postdate: Math.round(new Date().getTime()/1000.0),
                              nickname: ciphernickname
                          },
                          type:      'comment'
