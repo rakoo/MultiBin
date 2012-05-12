@@ -277,7 +277,6 @@ function send_data() {
         contentType: 'application/json',
         dataType: 'json'
     }).success(function(data) {
-            console.log("success : ", data);
             if (data.ok == true) {
                 stateExistingPaste();
                 var url = scriptLocation() + "?" + data.id + '#' + randomkey;
