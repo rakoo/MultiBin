@@ -144,7 +144,9 @@ function displayMessages(key, comments) {
     urls2links($('div#cleartext')); // Convert URLs to clickable links.
 
     // Display paste expiration.
-    if (comments[0].meta.expire_date) $('div#remainingtime').removeClass('foryoureyesonly').text('This document will expire in '+secondsToHuman(comments[0].meta.remaining_time)+'.').show();
+    if (comments[0].meta.expire_date) {
+        $('div#remainingtime').removeClass('foryoureyesonly').text('This document will expire in '+secondsToHuman(Math.round((new Date(comments[0].meta.expire_date).getTime() - new Date().getTime())/1000.0))+'.').show();
+    }
     if (comments[0].meta.burnafterreading) {
         $('div#remainingtime').addClass('foryoureyesonly').text('FOR YOUR EYES ONLY.  Don\'t close this window, this message can\'t be displayed again.').show();
         $('button#clonebutton').hide(); // Discourage cloning (as it can't really be prevented).
@@ -252,10 +254,19 @@ function send_data() {
     showStatus('Sending paste...', spin=true);
     var randomkey = sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
     var cipherdata = zeroCipher(randomkey, $('textarea#message').val());
+    var expire_duration = $('select#pasteExpiration').val();
+    var now = new Date();
+    var real_expire_date = new Date(now)
+    if (expire_duration == '10min') real_expire_date.setMinutes(now.getMinutes() + 10);
+    else if (expire_duration == '1hour') real_expire_date.setHours(now.getHours() + 1);
+    else if (expire_duration == '1day') real_expire_date.setDate(now.getDate() + 1);
+    else if (expire_duration == '1month') real_expire_date.setMonth(now.getMonth() + 1);
+    else if (expire_duration == '1year') real_expire_date.setFullYear(now.getFullYear() + 1);
+    else if (expire_duration == 'never') real_expire_date == null;
     var data_to_send = { data:           cipherdata,
                          meta:           {
-                             expire:         $('select#pasteExpiration').val(),
                              opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0,
+                             expire_date: real_expire_date
                          },
                          type:           "paste"
                        };
