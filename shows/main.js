@@ -10,7 +10,10 @@ function (doc, req) {
     } else {
         path = "../../";
         if (doc) {
-            cipherdata = doc.data;
+            var stripped_doc = doc;
+            delete stripped_doc["_id"];
+            delete stripped_doc["_rev"];
+            cipherdata = JSON.stringify([doc, "coucou"]);
         } else if (req.raw_path.substr(-1) != '/' ) {
             errormessage = "Wrong path : " + req.raw_path
         }
