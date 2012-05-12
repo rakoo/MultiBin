@@ -226,8 +226,10 @@ function send_data() {
     var randomkey = sjcl.codec.base64.fromBits(sjcl.random.randomWords(8, 0), 0);
     var cipherdata = zeroCipher(randomkey, $('textarea#message').val());
     var data_to_send = { data:           cipherdata,
-                         expire:         $('select#pasteExpiration').val(),
-                         opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0,
+                         meta:           {
+                             expire:         $('select#pasteExpiration').val(),
+                             opendiscussion: $('input#opendiscussion').is(':checked') ? 1 : 0,
+                         },
                          type:           "paste"
                        };
     $.ajax({
