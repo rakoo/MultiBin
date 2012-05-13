@@ -2,3 +2,7 @@
 
 - burnafterreading handling : as there is no server-side processing, we
   cannot delete a paste.
+
+- Interface with [remoteStorage](https://unhosted.org/). The idea is
+  that every logic is done on the client, and the storage server can be
+  anything, anywhere. This is totally relevant with the goal of ZeroBin.
