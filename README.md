@@ -13,6 +13,13 @@ This is a new version of
 
 CouchApps are a breeze to use, aren't them ?
 
+## Demo
+
+You can see what it looks like
+[here](https://krakotztest.iriscouch.com/multibin/_design/MultiBin/index.html).
+
+Be advised : this is a test service : data can be deleted at any time.
+
 ## Why CouchDB ?
 
 Because it is an awesome piece of tech, and I like it. There are also
