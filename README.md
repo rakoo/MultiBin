@@ -44,9 +44,10 @@ Internet is, after all. =]
 
 ## Unlicense
 
-This is public domain. See http://unlicense.org/ for more info.
+This is public domain. See UNLICENSE for the legal stuff, and
+http://unlicense.org for more info.
 
-## Original License
+## Original Licenses
 
 I stole a lot from ZeroBin. Most of the files I used are modified, so here is the original License : 
 
@@ -75,3 +76,9 @@ Copyright (c) 2012 Sébastien SAUVAGE (sebsauvage.net)
 
   ------------------------------------------------------------------------------
 
+Other parts of the code from various places :
+
+- CouchDB is under the Apache License 2.0
+- SJCL, the crypto library, is under BSD or GPL>=2.0
+- I might have forgotten other things; don't hesitate to contact me so I
+  can mention it
