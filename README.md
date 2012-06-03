@@ -49,6 +49,14 @@ services provide a Webserver with PHP. Only a few provide CouchDB. If
 you want to use it, chances are you'll do it from home. But this is what
 Internet is, after all. =]
 
+## Burner
+
+Because CouchDB is a database and not a web server, it is not designed
+to do internal processing. To manage expire dates, see
+[MultiBin-burner](https://github.com/rakoo/MultiBin-burner), an erlang
+tool that watches the documents as they arrive and deletes the expired
+docs.
+
 ## Unlicense
 
 This is public domain. See UNLICENSE for the legal stuff, and
